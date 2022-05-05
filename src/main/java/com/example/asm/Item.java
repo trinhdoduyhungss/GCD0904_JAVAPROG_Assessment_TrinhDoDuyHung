@@ -13,11 +13,14 @@ public class Item implements Comparable<Item>{
     private Integer itemPrice;
     private Integer indexItem;
 
-    public Item(String itemName, String itemLocation, LocalDate itemDate, Integer itemPrice, Integer indexItem) {
+    public Item(String itemName, String itemLocation, String itemDate, Integer itemPrice, Integer indexItem) {
         this.itemName = itemName;
         this.itemLocation = itemLocation;
-        this.itemDate = itemDate.toString();
-        this.itemDate = this.itemDate.substring(8, 10) + "/" + this.itemDate.substring(5, 7) + "/" + this.itemDate.substring(0, 4);
+        if(isDateValid(itemDate)) {
+            this.itemDate = itemDate;
+        }else{
+            this.itemDate = "";
+        }
         this.itemPrice = itemPrice;
         this.indexItem = indexItem;
     }
@@ -89,11 +92,6 @@ public class Item implements Comparable<Item>{
 
     @Override
     public String toString() {
-        return "Items{" +
-                "itemName='" + itemName + '\'' +
-                ", itemLocation='" + itemLocation + '\'' +
-                ", itemDate='" + itemDate + '\'' +
-                ", itemPrice=" + itemPrice +
-                '}';
+        return itemName+", "+itemLocation+", "+itemDate+", "+itemPrice;
     }
 }

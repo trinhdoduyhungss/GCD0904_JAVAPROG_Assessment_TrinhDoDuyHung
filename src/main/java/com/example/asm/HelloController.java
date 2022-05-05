@@ -7,7 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -61,6 +64,11 @@ public class HelloController implements Initializable {
                 pnlItemDetail.toFront();
                 break;
             case "Button[id=btnSaveData, styleClass=button]'Save data'" :
+                OverviewController ov = new OverviewController();
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setInitialDirectory(new File("F:\\Academic\\Specialize\\JAVA\\ASM\\src\\main\\resources\\com\\example\\asm\\Data"));
+                File file = fileChooser.showSaveDialog(new Stage());
+                ov.ExportData(file);
                 break;
             case "Button[id=btnQuit, styleClass=button]'Quit'" :
                 Platform.exit();

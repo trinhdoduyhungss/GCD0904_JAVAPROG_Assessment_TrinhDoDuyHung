@@ -40,6 +40,10 @@ public class Store {
         }
     }
 
+    public void clear(){
+        myItems.clear();
+    }
+
     public void sortData(){
         Collections.sort(this.myItems);
     }
@@ -55,9 +59,11 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store{" +
-                "myItems=" + myItems +
-                '}';
+        String multiLineData = "";
+        for (int i = 0; i < myItems.size(); i++) {
+            multiLineData += myItems.get(i).toString() + "\n";
+        }
+        return multiLineData;
     }
 
     public VBox RenderOverviewData(VBox pnItems){
