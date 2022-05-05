@@ -2,6 +2,7 @@ package com.example.asm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -24,6 +25,16 @@ public class OverviewController implements Initializable {
     @FXML
     private ScrollPane splItems;
 
+    @FXML
+    public Label totalOrders;
+
+    @FXML
+    public Label totalAmounts;
+
+    public static Label totalOrdersStatic;
+
+    public static Label totalAmountsStatic;
+
     public static VBox pnlItemsStatic;
 
     private Integer indexDelete = -1;
@@ -34,6 +45,8 @@ public class OverviewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        totalOrdersStatic = totalOrders;
+        totalAmountsStatic = totalAmounts;
         fileChooser.setInitialDirectory(new File("F:\\Academic\\Specialize\\JAVA\\ASM\\src\\main\\resources\\com\\example\\asm\\Data"));
         if(pnlItems != null){
             RenderData();
@@ -49,18 +62,26 @@ public class OverviewController implements Initializable {
     public void addNewItem(){
         Item item = new Item("Item " + (myStoreData.getStoreLengtḥ()+1), "Vietnam", formatDate(LocalDate.now()), Math.toIntExact(Math.round(Math.random() * 100 + 100)), myStoreData.getStoreLengtḥ()+1);
         myStoreData.addNew(item, pnlItems);
+        totalOrders.setText(myStoreData.getTotalOrders().toString());
+        totalAmounts.setText(myStoreData.getTotalPrice().toString());
+        totalOrdersStatic = totalOrders;
+        totalAmountsStatic = totalAmounts;
         splItems.vvalueProperty().bind(pnlItems.heightProperty());
     }
 
     public void deleteItem(Integer index){
         indexDelete = index;
         myStoreData.delete(indexDelete, pnlItemsStatic);
+        totalOrdersStatic.setText(myStoreData.getTotalOrders().toString());
+        totalAmountsStatic.setText(myStoreData.getTotalPrice().toString());
         indexDelete = -1;
         pnlItemsStatic = myStoreData.RenderOverviewData(pnlItemsStatic);
     }
 
     public void updateItem(Integer index, String name, String location, String date, String price){
         myStoreData.getItem(index).updateItem(name, location, date, price);
+        totalOrdersStatic.setText(myStoreData.getTotalOrders().toString());
+        totalAmountsStatic.setText(myStoreData.getTotalPrice().toString());
         pnlItemsStatic.getChildren().clear();
         pnlItemsStatic = myStoreData.RenderOverviewData(pnlItemsStatic);        
     }
@@ -78,6 +99,10 @@ public class OverviewController implements Initializable {
                 myStoreData.add(item);
                 indexItem += 1;
             }
+            totalOrders.setText(indexItem.toString());
+            totalAmounts.setText(myStoreData.getTotalPrice().toString());
+            totalOrdersStatic = totalOrders;
+            totalAmountsStatic = totalAmounts;
             myStoreData.sortData();
             pnlItemsStatic = myStoreData.RenderOverviewData(pnlItems);
         }catch (FileNotFoundException e){

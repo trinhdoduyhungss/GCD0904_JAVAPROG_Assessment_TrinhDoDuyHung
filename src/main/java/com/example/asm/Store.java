@@ -56,6 +56,18 @@ public class Store {
         return null;
     }
 
+    public Integer getTotalPrice(){
+        Integer totalPrice = 0;
+        for (int i = 0; i < myItems.size(); i++) {
+            totalPrice += myItems.get(i).getItemPrice();
+        }
+        return totalPrice;
+    }
+
+    public Integer getTotalOrders(){
+        return myItems.size();
+    }
+
     @Override
     public String toString() {
         String multiLineData = "";
