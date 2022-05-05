@@ -36,7 +36,6 @@ public class Store {
         if(itemDelete >= 0){
             myItems.remove((int) itemDelete);
             sortData();
-            RenderOverviewData(pnItems);
         }
     }
 

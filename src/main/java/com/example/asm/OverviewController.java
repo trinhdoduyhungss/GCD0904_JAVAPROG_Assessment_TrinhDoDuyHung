@@ -53,8 +53,6 @@ public class OverviewController implements Initializable {
     }
 
     public void deleteItem(Integer index){
-        System.out.println(pnlItemsStatic.toString());
-        System.out.println(myStoreData.toString());
         indexDelete = index;
         myStoreData.delete(indexDelete, pnlItemsStatic);
         indexDelete = -1;
@@ -78,6 +76,7 @@ public class OverviewController implements Initializable {
                 String[] lineData = scr.nextLine().split(", ");
                 Item item = new Item(lineData[0], lineData[1], lineData[2], Integer.valueOf(lineData[3]), indexItem);
                 myStoreData.add(item);
+                indexItem += 1;
             }
             myStoreData.sortData();
             pnlItemsStatic = myStoreData.RenderOverviewData(pnlItems);
