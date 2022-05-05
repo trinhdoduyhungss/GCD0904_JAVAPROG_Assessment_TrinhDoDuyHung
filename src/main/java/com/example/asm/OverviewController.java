@@ -47,7 +47,7 @@ public class OverviewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         totalOrdersStatic = totalOrders;
         totalAmountsStatic = totalAmounts;
-        fileChooser.setInitialDirectory(new File("F:\\Academic\\Specialize\\JAVA\\ASM\\src\\main\\resources\\com\\example\\asm\\Data"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         if(pnlItems != null){
             RenderData();
         }
@@ -88,25 +88,36 @@ public class OverviewController implements Initializable {
 
     public void RenderData(){
         File file = fileChooser.showOpenDialog(new Stage());
-        try{
-            Scanner scr = new Scanner(file);
-            Integer indexItem = 0;
-            pnlItems.getChildren().clear();
-            myStoreData.clear();
-            while (scr.hasNextLine()){
-                String[] lineData = scr.nextLine().split(", ");
-                Item item = new Item(lineData[0], lineData[1], lineData[2], Integer.valueOf(lineData[3]), indexItem);
-                myStoreData.add(item);
-                indexItem += 1;
+        if(file != null){
+            try{
+                Scanner scr = new Scanner(file);
+                Integer indexItem = 0;
+                pnlItems.getChildren().clear();
+                myStoreData.clear();
+                while (scr.hasNextLine()){
+                    String[] lineData = scr.nextLine().split(", ");
+                    Item item = new Item(lineData[0], lineData[1], lineData[2], Integer.valueOf(lineData[3]), indexItem);
+                    myStoreData.add(item);
+                    indexItem += 1;
+                }
+                totalOrders.setText(indexItem.toString());
+                totalAmounts.setText(myStoreData.getTotalPrice().toString());
+                totalOrdersStatic = totalOrders;
+                totalAmountsStatic = totalAmounts;
+                myStoreData.sortData();
+                pnlItemsStatic = myStoreData.RenderOverviewData(pnlItems);
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
             }
-            totalOrders.setText(indexItem.toString());
+        }else{
+            Item item = new Item("item example", "Vietnam", formatDate(LocalDate.now()), (int)(Math.random()*100)+1, 0);
+            myStoreData.clear();
+            myStoreData.add(item);
+            totalOrders.setText(myStoreData.getTotalOrders().toString());
             totalAmounts.setText(myStoreData.getTotalPrice().toString());
             totalOrdersStatic = totalOrders;
             totalAmountsStatic = totalAmounts;
-            myStoreData.sortData();
             pnlItemsStatic = myStoreData.RenderOverviewData(pnlItems);
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
         }
     }
 

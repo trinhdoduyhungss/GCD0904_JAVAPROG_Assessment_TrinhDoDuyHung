@@ -66,9 +66,11 @@ public class HelloController implements Initializable {
             case "Button[id=btnSaveData, styleClass=button]'Save data'" :
                 OverviewController ov = new OverviewController();
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setInitialDirectory(new File("F:\\Academic\\Specialize\\JAVA\\ASM\\src\\main\\resources\\com\\example\\asm\\Data"));
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
                 File file = fileChooser.showSaveDialog(new Stage());
-                ov.ExportData(file);
+                if(file != null){
+                    ov.ExportData(file);
+                }
                 break;
             case "Button[id=btnQuit, styleClass=button]'Quit'" :
                 Platform.exit();
