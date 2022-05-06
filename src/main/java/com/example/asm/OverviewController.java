@@ -131,7 +131,7 @@ public class OverviewController implements Initializable {
         }
     }
 
-    public void handleClicks(ActionEvent actionEvent) throws IOException {
+    public void handleClicks(ActionEvent actionEvent){
         String action = actionEvent.getSource().toString();
         if (action.equals("Button[id=btnImportItem, styleClass=button]'+'")) {
             addNewItem();
