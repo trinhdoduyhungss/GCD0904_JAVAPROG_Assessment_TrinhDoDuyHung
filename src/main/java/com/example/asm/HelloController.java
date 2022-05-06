@@ -43,9 +43,11 @@ public class HelloController implements Initializable {
             ((Button) pnlItemDetailXML.lookup("#btnItemEdit")).setOnAction(e->{
                 OverviewController ov = new OverviewController();
                 ov.updateItem(indexEdit, ((TextField) pnlItemDetailXML.lookup("#boxName")).getText(), ((TextField) pnlItemDetailXML.lookup("#boxLocation")).getText(), ((TextField) pnlItemDetailXML.lookup("#boxDate")).getText(), ((TextField) pnlItemDetailXML.lookup("#boxPrice")).getText());
+                pnlOverviewStatic.setStyle("-fx-background-color : #02030A");
                 pnlOverviewStatic.toFront();
             });
             pnlItemDetailStatic.getChildren().add(pnlItemDetailXML);
+            pnlOverviewStatic.setStyle("-fx-background-color : #02030A");
             pnlItemDetailStatic.toFront();
         }catch(IOException e) {
             e.printStackTrace();
