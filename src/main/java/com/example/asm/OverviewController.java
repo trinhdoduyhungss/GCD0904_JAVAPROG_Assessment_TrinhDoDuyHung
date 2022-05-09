@@ -96,9 +96,15 @@ public class OverviewController implements Initializable {
                 myStoreData.clear();
                 while (scr.hasNextLine()){
                     String[] lineData = scr.nextLine().split(", ");
-                    Item item = new Item(lineData[0], lineData[1], lineData[2], Integer.valueOf(lineData[3]), indexItem);
-                    myStoreData.add(item);
-                    indexItem += 1;
+                    try {
+                        Item item = new Item(lineData[0], lineData[1], lineData[2], Integer.valueOf(lineData[3]), indexItem);
+                        myStoreData.add(item);
+                        indexItem += 1;
+                    }catch (Exception e){
+                        HelloController hl = new HelloController();
+                        hl.showAlert("Check your inputs", "The file must be in the format: name, location, dd/mm/yyyy, price", "Please check your file again");
+                        break;
+                    }
                 }
                 totalOrders.setText(indexItem.toString());
                 totalAmounts.setText(myStoreData.getTotalPrice().toString());
@@ -107,6 +113,8 @@ public class OverviewController implements Initializable {
                 myStoreData.sortData();
                 pnlItemsStatic = myStoreData.RenderOverviewData(pnlItems);
             }catch (FileNotFoundException e){
+                HelloController hl = new HelloController();
+                hl.showAlert("Check your inputs", "Error loading file", e.toString());
                 e.printStackTrace();
             }
         }else{
